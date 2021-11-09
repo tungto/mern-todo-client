@@ -81,10 +81,17 @@ const TaskContextProvider = ({ children }) => {
 		dispatch({ type: Types.SEARCH_TASK, payload: keyword });
 	};
 	const sortTasks = async (sortBy) => {
-		// dispatch({ type: Types.SORT_TASKS, payload: sortBy });
+		console.log(sortBy, 'check sortby');
 
 		try {
-			const response = await axios.get(`${apiUrl}/tasks?sortBy=${sortBy}:desc`);
+			let response;
+			if (sortBy === 'resetSort') {
+				response = await axios.get(`${apiUrl}/tasks`);
+			} else {
+				response = await axios.get(`${apiUrl}/tasks?sortBy=${sortBy}:asc`);
+			}
+
+			console.log(response.data.tasks);
 
 			dispatch({ type: Types.SORT_TASKS, payload: response.data.tasks });
 		} catch (error) {

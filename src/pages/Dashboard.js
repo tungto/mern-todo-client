@@ -22,7 +22,6 @@ function Dashboard() {
 	let taskList = isSearching ? filteredTasks : tasks;
 	let body;
 
-	console.log(taskLoading, !isSearching, taskList.length, taskList.length < 1);
 	if (taskLoading) {
 		body = <h1>Loading.....</h1>;
 	} else if (!isSearching && taskList.length < 1) {

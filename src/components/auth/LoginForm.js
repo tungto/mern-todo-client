@@ -18,7 +18,6 @@ function LoginForm() {
 	const login = async (values) => {
 		try {
 			const loginData = await loginUser(values);
-
 			if (loginData.success) {
 			} else {
 				setAlertMessage(loginData.message);

@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import { TaskContext } from '../../context/TaskContext';
@@ -11,7 +11,7 @@ import MySelect from '../UI/MySelect/MySelect';
 import MyTextArea from '../UI/MyTextArea/MyTextArea';
 import MyTextInput from '../UI/MyTextInput/MyTextInput';
 
-const TaskForm = ({ task }) => {
+const TaskForm = ({ task, setIsEditing = undefined }) => {
 	const { addTask, updateTask } = useContext(TaskContext);
 	const isEditing = task?.name ? true : false;
 	const history = useHistory();
@@ -28,6 +28,8 @@ const TaskForm = ({ task }) => {
 			}
 			console.log(success, message);
 		}
+
+		setIsEditing && setIsEditing(false);
 	};
 
 	return (
@@ -35,7 +37,7 @@ const TaskForm = ({ task }) => {
 			initialValues={{
 				name: task?.name ? task?.name : '',
 				description: task?.description ? task?.description : '',
-				priority: task?.priority ? task?.priority : 'normal',
+				priority: task?.priority ? task?.priority : '2',
 				dueDate: task?.dueDate ? task?.dueDate : new Date(),
 			}}
 			validationSchema={Yup.object({
@@ -47,7 +49,7 @@ const TaskForm = ({ task }) => {
 				submitForm(values);
 			}}>
 			<FormContainer>
-				<Form className="add-taks-form">
+				<Form className="add-task-form">
 					<MyTextInput label="Task name" name="name" type="text" placeholder="Task name" className="task-name" />
 					<MyTextArea label="Task description" name="description" type="text" placeholder="Task description" className="description" />
 
@@ -58,16 +60,20 @@ const TaskForm = ({ task }) => {
 						</div>
 
 						<div className="priority">
+							<label htmlFor="priority">Priority</label>
 							<MySelect label="Priority" name="priority">
 								<option value="">Priority</option>
-								<option value="low">Low</option>
-								<option value="normal">Normal</option>
-								<option value="high">High</option>
+								<option value="1">Low</option>
+								<option value="2">Normal</option>
+								<option value="3">High</option>
 							</MySelect>
 						</div>
 					</div>
 
 					<button type="submit" className="btn btn-add">{`${isEditing ? 'update' : 'add'}`}</button>
+					<Link type="submit" className="btn btn-cancel" to="/dashboard" onClick={() => setIsEditing && setIsEditing(false)}>
+						Cancel
+					</Link>
 				</Form>
 			</FormContainer>
 		</Formik>
@@ -84,25 +90,24 @@ TaskForm.propTypes = {
 };
 
 const FormContainer = styled.div`
-	label,
-	.priority label {
-		margin-top: 0.5rem;
-		margin-bottom: 0.5rem;
-		text-transform: capitalize;
-		font-weight: 500;
-		text-align: left;
-	}
-
-	.add-taks-form {
+	.add-task-form {
 		padding: 3rem;
 		.input-title {
 			padding: 10px;
-			width: 80%;
+			width: 100%;
 			border-radius: var(--radius);
 		}
 		.field {
 			display: flex;
 			flex-direction: column;
+		}
+		label {
+			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
+			text-transform: capitalize;
+			font-weight: 500;
+			text-align: left;
+			display: inline-block;
 		}
 		.description {
 			height: 125px;
@@ -116,6 +121,9 @@ const FormContainer = styled.div`
 			border-radius: 3px;
 			border: 1px solid grey;
 		}
+		.priority {
+			text-align: left;
+		}
 		.form-section {
 			width: 80%;
 			margin: 0 auto;
@@ -124,19 +132,13 @@ const FormContainer = styled.div`
 			justify-items: center;
 			align-items: center;
 		}
-		.error {
-			color: red;
-			font-size: 12px;
-			// margin-bottom: 20px;
-		}
-
 		.other-infos {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 			gap: 2rem;
 			input,
 			select {
-				width: 100%;
+				width: 150px;
 				padding: 0.5rem;
 			}
 			.date-bar {
@@ -161,11 +163,16 @@ const FormContainer = styled.div`
 				background: var(--clr-red-light);
 			}
 		}
-		.error-msg {
+		.btn-cancel{
+			margin-left: 50px;
+			color: #fff;
+			background-color: #6c757d;
+			border-color: #6c757d;
+		}
+		}
+		.error {
 			text-align: left;
-			width: 80%;
 			color: var(--clr-red-dark);
-			margin: 0 auto;
 		}
 
 		@media (max-width: 800px) {

@@ -86,22 +86,9 @@ const taskReducer = (state, action) => {
 	}
 
 	if (type === Types.SORT_TASKS) {
-		// const { sort } = state;
-		// if (sort === 'due-date') {
-		// 	sortedTasks = sortedTasks.sort((a, b) => {
-		// 		if (typeof a.dueDate === 'object' && a.dueDate !== null) {
-		// 			a.dueDate = JSON.parse(JSON.stringify(a.dueDate));
-		// 		}
-		// 		if (typeof b.dueDate === 'object' && b.dueDate !== null) {
-		// 			b.dueDate = JSON.parse(JSON.stringify(b.dueDate));
-		// 		}
-
-		// 		return new Date(a.dueDate) - new Date(b.dueDate);
-		// 	});
-		// }
-
 		return {
 			...state,
+			tasks: payload,
 		};
 	}
 

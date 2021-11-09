@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import { AuthContext } from '../../context/AuthContext';
 
 const Header = () => {
-	const { logoutUser } = useContext(AuthContext);
+	const { logoutUser, deleteUser } = useContext(AuthContext);
 	const logout = () => logoutUser();
 	return (
 		<NavContainer className="navbar">
 			<ul className="nav-links">
 				<li className="link">
 					<Link to="/" exact="true">
-						Home
+						Dashboard
 					</Link>
 				</li>
 				<li className="link">
@@ -20,6 +20,11 @@ const Header = () => {
 				<li className="link">
 					<button onClick={logout} className="logout-btn">
 						Logout
+					</button>
+				</li>
+				<li className="link">
+					<button onClick={deleteUser} className="logout-btn">
+						Delete Account
 					</button>
 				</li>
 			</ul>

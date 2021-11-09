@@ -7,5 +7,6 @@ export const authReducer = (state, action) => {
 	if (type === 'SET_AUTH') {
 		return { ...state, authLoading: false, isAuthenticated, user };
 	}
+
 	return { ...state };
 };

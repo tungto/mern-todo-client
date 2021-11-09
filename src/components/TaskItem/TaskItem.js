@@ -6,15 +6,21 @@ import TaskForm from '../TaskForm/TaskForm';
 const TaskItem = (props) => {
 	const { removeTask, selectTask } = useContext(TaskContext);
 	const [isEditing, setIsEditing] = useState(false);
-	const { name, _id, isSelected } = props;
-
+	const { name, _id, isSelected, description, priority } = props;
 	return (
 		<TaskItemContainer className="task-container">
-			<div className={`${isEditing ? 'task task-editing' : 'task'}`}>
-				<div className="left-task-item">
-					<input type="checkbox" name="checkbox" className="checkbox" checked={isSelected} onChange={() => selectTask(_id, isSelected)} />
-					<span className="task-title">{name}</span>
+			<div
+				className={`${isEditing ? 'task task-editing' : 'task'} ${
+					priority === '1' ? 'prior-low' : priority === '2' ? 'prior-normal' : 'prior-high'
+				}`}>
+				<div>
+					<div className="left-task-item">
+						<input type="checkbox" name="checkbox" className="checkbox" checked={isSelected} onChange={() => selectTask(_id, isSelected)} />
+						<span className="task-title">{name}</span>
+					</div>
+					<p className="description">{description}</p>
 				</div>
+
 				<div className="buttons">
 					<button onClick={() => setIsEditing(!isEditing)} className="btn btn-detail">
 						detail
@@ -34,6 +40,15 @@ const TaskItemContainer = styled.div`
 	border-radius: var(--radius);
 	margin-top: 1.5rem;
 	margin-bottom: 1.5rem;
+	.prior-low {
+		background: #f5f8f2;
+	}
+	.prior-normal {
+		background: #e2e8ee;
+	}
+	.prior-high {
+		background: #f8e9ea;
+	}
 	.task-editing {
 		border-bottom: 1px solid var(--clr-black);
 	}
@@ -60,6 +75,17 @@ const TaskItemContainer = styled.div`
 		}
 		.task-title {
 			text-transform: capitalize;
+			font-weight: 600;
+		}
+		.description {
+			display: block;
+			margin-bottom: 0;
+			margin-left: 30px;
+			text-align: left;
+			max-width: 300px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
 		}
 		.btn-detail {
 			margin-right: 1rem;

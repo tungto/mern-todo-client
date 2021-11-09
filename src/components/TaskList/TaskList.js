@@ -18,7 +18,7 @@ const TaskList = ({ tasks }) => {
 };
 
 const TaskListContainer = styled.div`
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
 `;
 

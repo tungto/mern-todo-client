@@ -12,3 +12,5 @@ export const POSTS_LOADED_FAIL = 'POST_LOADED_FAIL';
 export const POSTS_LOADED_SUCCESS = 'POSTS_LOADED_SUCCESS';
 export const POST_LOADED_FAIL = 'POST_LOADED_FAIL';
 export const SEARCH_TASK = 'SEARCH_TASK';
+export const SET_AUTH = 'SET_AUTH';
+export const DELETE_USER = 'DELETE_USER';
