@@ -94,7 +94,6 @@ const FormContainer = styled.div`
 	}
 
 	.add-taks-form {
-		max-width: 600px;
 		padding: 3rem;
 		.input-title {
 			padding: 10px;
